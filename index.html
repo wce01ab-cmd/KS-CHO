@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서부초등50회 봄나들이 차량 탑승 안내</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+  :root {
+    --pink-deep: #d63f6e;
+    --pink-mid:  #f2789f;
+    --pink-soft: #fde8ef;
+    --pink-pale: #fff5f8;
+    --green:     #3a8c5c;
+    --green-light: #e6f5ec;
+    --gold:      #c49a2b;
+    --gold-light:#fdf6e3;
+    --dark:      #2a1a1f;
+    --gray:      #6b5b62;
+    --white:     #fffcfd;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--pink-pale);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── 배경 꽃잎 ── */
+  .petals {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-60px) rotate(0deg);   opacity: .8; }
+    100% { transform: translateY(110vh)  rotate(720deg); opacity: 0; }
+  }
+
+  /* ── 헤더 ── */
+  header {
+    position: relative; z-index: 1;
+    background: linear-gradient(160deg, #f9c1d0 0%, #fbdde8 40%, #fff5f8 100%);
+    border-bottom: 3px solid var(--pink-mid);
+    padding: 36px 20px 28px;
+    text-align: center;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='3' fill='%23f2789f' opacity='.15'/%3E%3C/svg%3E") repeat;
+    z-index: -1;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--pink-deep);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(20px, 5vw, 30px);
+    font-weight: 800;
+    color: var(--pink-deep);
+    line-height: 1.4;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    margin-bottom: 10px;
+  }
+  header h1 span { color: var(--dark); }
+  .header-date {
+    font-size: 15px;
+    color: var(--gray);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .header-notice {
+    font-size: 13px;
+    color: var(--pink-deep);
+    font-weight: 700;
+    background: rgba(255,255,255,.7);
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 8px;
+    border: 1px dashed var(--pink-mid);
+  }
+
+  /* ── 메인 ── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+
+  /* ── 섹션 제목 ── */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin: 32px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--pink-mid), transparent);
+  }
+
+  /* ── 탑승 카드 ── */
+  .stop-cards { display: grid; gap: 16px; }
+
+  .stop-card {
+    background: #fff;
+    border-radius: 18px;
+    border: 2px solid var(--pink-soft);
+    box-shadow: 0 4px 18px rgba(214,63,110,.08);
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .stop-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(214,63,110,.14); }
+
+  .stop-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--pink-soft);
+  }
+  .stop-icon {
+    width: 46px; height: 46px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .stop-icon.pink { background: var(--pink-soft); }
+  .stop-icon.green { background: var(--green-light); }
+
+  .stop-info h2 { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .stop-info .time-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px; border-radius: 20px;
+  }
+  .time-badge.pink { background: var(--pink-soft); color: var(--pink-deep); }
+  .time-badge.green { background: var(--green-light); color: var(--green); }
+
+  .stop-manager {
+    font-size: 12px; color: var(--gray); margin-top: 4px;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .stop-body { padding: 16px 20px 20px; }
+
+  .count-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .count-label { font-size: 13px; color: var(--gray); font-weight: 500; }
+  .count-value {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 32px; font-weight: 800;
+    color: var(--pink-deep);
+    line-height: 1;
+  }
+  .count-value.green { color: var(--green); }
+  .count-unit { font-size: 14px; font-weight: 700; color: var(--gray); margin-left: 2px; }
+
+  /* 이름 목록 */
+  .name-list {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    min-height: 38px;
+    margin-bottom: 14px;
+  }
+  .name-tag {
+    background: var(--pink-soft); color: var(--pink-deep);
+    font-size: 12px; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    display: flex; align-items: center; gap: 5px;
+    animation: popIn .25s ease;
+  }
+  .name-tag.green { background: var(--green-light); color: var(--green); }
+  .name-tag .del-btn {
+    cursor: pointer; font-size: 11px; opacity: .6;
+    background: none; border: none; color: inherit; padding: 0; line-height: 1;
+  }
+  .name-tag .del-btn:hover { opacity: 1; }
+  @keyframes popIn {
+    from { transform: scale(.7); opacity: 0; }
+    to   { transform: scale(1);  opacity: 1; }
+  }
+  .empty-hint { font-size: 12px; color: #ccc; align-self: center; }
+
+  /* 입력 */
+  .input-row {
+    display: flex; gap: 8px;
+  }
+  .name-input {
+    flex: 1;
+    border: 2px solid var(--pink-soft);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+    background: var(--pink-pale);
+    color: var(--dark);
+  }
+  .name-input:focus { border-color: var(--pink-mid); background: #fff; }
+  .name-input.green:focus { border-color: var(--green); }
+
+  .add-btn {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: none; cursor: pointer;
+    font-size: 13px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: transform .15s, box-shadow .15s;
+    white-space: nowrap;
+  }
+  .add-btn.pink { background: var(--pink-deep); color: #fff; box-shadow: 0 3px 12px rgba(214,63,110,.3); }
+  .add-btn.green { background: var(--green); color: #fff; box-shadow: 0 3px 12px rgba(58,140,92,.3); }
+  .add-btn:hover { transform: translateY(-2px); }
+  .add-btn:active { transform: scale(.96); }
+
+  /* ── 합산 카드 ── */
+  .total-card {
+    margin-top: 28px;
+    background: linear-gradient(135deg, var(--gold-light) 0%, #fff9e6 100%);
+    border: 2px solid #e8cc7a;
+    border-radius: 18px;
+    padding: 24px 24px 20px;
+    box-shadow: 0 4px 20px rgba(196,154,43,.12);
+  }
+  .total-card h3 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 16px; font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .total-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; text-align: center;
+  }
+  .total-item { background: rgba(255,255,255,.7); border-radius: 12px; padding: 14px 8px; }
+  .total-item .t-num {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 36px; font-weight: 800; line-height: 1;
+  }
+  .total-item .t-label { font-size: 11px; font-weight: 700; color: var(--gray); margin-top: 4px; }
+  .total-item:nth-child(1) .t-num { color: var(--pink-deep); }
+  .total-item:nth-child(2) .t-num { color: var(--green); }
+  .total-item:nth-child(3) .t-num { color: var(--gold); }
+
+  /* ── 안내 문구 ── */
+  .notice-box {
+    margin-top: 24px;
+    background: #fff;
+    border-left: 4px solid var(--pink-deep);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--gray);
+  }
+  .notice-box strong { color: var(--pink-deep); }
+
+  /* ── 푸터 ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 20px 16px 32px;
+    border-top: 1px solid var(--pink-soft);
+    background: linear-gradient(to bottom, var(--pink-pale), #fff5f8);
+  }
+  .footer-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--pink-deep);
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
+  .footer-title span { color: var(--dark); }
+  .footer-sub {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--gray);
+    letter-spacing: 1px;
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 440px) {
+    .total-grid { grid-template-columns: 1fr 1fr; }
+    .total-item:last-child { grid-column: span 2; }
+    .input-row { flex-direction: column; }
+    .add-btn { width: 100%; padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 꽃잎 배경 -->
+<div class="petals" id="petals"></div>
+
+<!-- 헤더 -->
+<header>
+  <div class="header-badge">🌸 2026 봄나들이</div>
+  <h1>서부초등 50회<br><span>차량 탑승 안내</span></h1>
+  <p class="header-date">📅 2026년 5월 17일 (셋째 일요일)</p>
+  <p class="header-notice">⚠️ 필히 신청한 차량 탑승 장소에서 탑승하세요!</p>
+</header>
+
+<main>
+
+  <div class="section-title">🚌 탑승 장소 선택 및 인원 체크</div>
+
+  <div class="stop-cards">
+
+    <!-- 서구청 -->
+    <div class="stop-card">
+      <div class="stop-header">
+        <div class="stop-icon pink">🏛️</div>
+        <div class="stop-info">
+          <h2>서구청</h2>
+          <span class="time-badge pink">⏰ 오전 8:00 출발</span>
+          <p class="stop-manager">👤 담당 총무 : 최분순</p>
+        </div>
+      </div>
+      <div class="stop-body">
+        <div class="count-row">
+          <span class="count-label">현재 탑승 신청 인원</span>
+          <div>
+            <span class="count-value" id="count-a">0</span>
+            <span class="count-unit">명</span>
+          </div>
+        </div>
+        <div class="name-list" id="list-a">
+          <span class="empty-hint">아직 신청자가 없습니다</span>
+        </div>
+        <div class="input-row">
+          <input class="name-input" id="input-a" type="text" placeholder="이름을 입력하세요" maxlength="10">
+          <button class="add-btn pink" onclick="addName('a')">✅ 신청</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 성서홈플러스 -->
+    <div class="stop-card">
+      <div class="stop-header">
+        <div class="stop-icon green">🛒</div>
+        <div class="stop-info">
+          <h2>성서 홈플러스</h2>
+          <span class="time-badge green">⏰ 오전 8:20 출발</span>
+          <p class="stop-manager">👤 담당 총무 : 조기상</p>
+        </div>
+      </div>
+      <div class="stop-body">
+        <div class="count-row">
+          <span class="count-label">현재 탑승 신청 인원</span>
+          <div>
+            <span class="count-value green" id="count-b">0</span>
+            <span class="count-unit">명</span>
+          </div>
+        </div>
+        <div class="name-list" id="list-b">
+          <span class="empty-hint">아직 신청자가 없습니다</span>
+        </div>
+        <div class="input-row">
+          <input class="name-input green" id="input-b" type="text" placeholder="이름을 입력하세요" maxlength="10">
+          <button class="add-btn green" onclick="addName('b')">✅ 신청</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 합산 -->
+  <div class="total-card">
+    <h3>🏆 전체 탑승 인원 합산</h3>
+    <div class="total-grid">
+      <div class="total-item">
+        <div class="t-num" id="total-a">0</div>
+        <div class="t-label">서구청</div>
+      </div>
+      <div class="total-item">
+        <div class="t-num" id="total-b">0</div>
+        <div class="t-label">성서홈플러스</div>
+      </div>
+      <div class="total-item">
+        <div class="t-num" id="total-all">0</div>
+        <div class="t-label">전체 합계</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 안내 -->
+  <div class="notice-box">
+    🌸 <strong>차량 탑승 안내</strong><br>
+    · 본인이 신청한 탑승 장소에서 <strong>반드시</strong> 탑승해 주세요.<br>
+    · 이름 입력 후 <strong>신청 버튼</strong>을 눌러 주시면 명단에 추가됩니다.<br>
+    · 잘못 입력하신 경우 이름 옆 <strong>✕</strong>를 눌러 취소하실 수 있습니다.<br>
+    · 모든 회원이 이 페이지에서 <strong>실시간으로 확인</strong> 가능합니다.
+  </div>
+
+</main>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-title">
+    서부초등학교 50회 동창회<br>
+    <span>2026</span>
+  </div>
+  <div class="footer-sub">🌸 함께해서 행복한 봄나들이 🌸</div>
+</footer>
+
+<script>
+  /* ── 꽃잎 생성 ── */
+  (function(){
+    const container = document.getElementById('petals');
+    const colors = ['#f9a8c4','#f2789f','#fbc9d8','#fdd9e5','#f7c5d0','#fde8ef'];
+    for(let i = 0; i < 28; i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 8 + Math.random()*14;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        left:${Math.random()*100}%;
+        animation-duration:${6+Math.random()*10}s;
+        animation-delay:${-Math.random()*12}s;
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  /* ── 데이터 (localStorage) ── */
+  function loadData(key){ try{ return JSON.parse(localStorage.getItem(key)||'[]'); } catch(e){ return []; } }
+  function saveData(key, arr){ localStorage.setItem(key, JSON.stringify(arr)); }
+
+  let namesA = loadData('seobuchoding_a');
+  let namesB = loadData('seobuchoding_b');
+
+  /* ── 렌더링 ── */
+  function render(){
+    renderList('a', namesA);
+    renderList('b', namesB);
+    document.getElementById('count-a').textContent   = namesA.length;
+    document.getElementById('count-b').textContent   = namesB.length;
+    document.getElementById('total-a').textContent   = namesA.length;
+    document.getElementById('total-b').textContent   = namesB.length;
+    document.getElementById('total-all').textContent = namesA.length + namesB.length;
+  }
+
+  function renderList(key, arr){
+    const el = document.getElementById('list-'+key);
+    if(arr.length === 0){
+      el.innerHTML = '<span class="empty-hint">아직 신청자가 없습니다</span>';
+      return;
+    }
+    el.innerHTML = arr.map((name,i)=>`
+      <span class="name-tag${key==='b'?' green':''}">
+        ${name}
+        <button class="del-btn" onclick="removeName('${key}',${i})" title="취소">✕</button>
+      </span>
+    `).join('');
+  }
+
+  /* ── 추가 ── */
+  function addName(key){
+    const input = document.getElementById('input-'+key);
+    const name = input.value.trim();
+    if(!name){ input.focus(); return; }
+    const arr = key==='a' ? namesA : namesB;
+
+    if(arr.includes(name)){
+      alert(`'${name}'님은 이미 ${key==='a'?'서구청':'성서홈플러스'} 명단에 있습니다.`);
+      input.value=''; input.focus(); return;
+    }
+    // 반대편 명단 중복 체크
+    const other = key==='a' ? namesB : namesA;
+    if(other.includes(name)){
+      const otherName = key==='a' ? '성서홈플러스' : '서구청';
+      if(!confirm(`'${name}'님이 이미 ${otherName} 명단에 있습니다.\n현재 장소로 변경하시겠습니까?`)) return;
+      const idx = other.indexOf(name);
+      other.splice(idx,1);
+      saveData(key==='a'?'seobuchoding_b':'seobuchoding_a', other);
+    }
+    arr.push(name);
+    saveData('seobuchoding_'+key, arr);
+    input.value='';
+    render();
+    input.focus();
+  }
+
+  /* ── 삭제 ── */
+  function removeName(key, idx){
+    const arr = key==='a' ? namesA : namesB;
+    const name = arr[idx];
+    if(!confirm(`'${name}'님을 명단에서 삭제하시겠습니까?`)) return;
+    arr.splice(idx,1);
+    saveData('seobuchoding_'+key, arr);
+    render();
+  }
+
+  /* ── 엔터키 ── */
+  document.getElementById('input-a').addEventListener('keydown', e=>{ if(e.key==='Enter') addName('a'); });
+  document.getElementById('input-b').addEventListener('keydown', e=>{ if(e.key==='Enter') addName('b'); });
+
+  /* ── 초기 렌더 ── */
+  render();
+</script>
+</body>
+</html>
