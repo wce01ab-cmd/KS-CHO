@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>서부초등 50회 2026년 칠순 해외여행 예약 신청</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --kakao:#FEE500; --kakao-dk:#3C1E1E;
+  --cream:#FFFDF5; --border:#E5DDD0;
+  --red:#D94040; --green:#1E9E6B; --blue:#2B63CC;
+  --shadow:0 4px 24px rgba(0,0,0,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:15px;font-weight:700;
+  background:#C8C4BD;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 0 70px;
+}
+.chat-wrap{width:100%;max-width:440px;padding:0 10px;}
+
+/* chat header */
+.chat-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:0 4px;}
+.chat-avatar{width:46px;height:46px;border-radius:30%;background:var(--kakao);display:flex;align-items:center;justify-content:center;font-size:23px;box-shadow:0 2px 10px rgba(0,0,0,0.18);}
+.chat-name{font-size:14px;font-weight:900;color:#222;}
+.chat-sub{font-size:12px;color:#888;font-weight:500;margin-top:2px;}
+
+/* bubble */
+.bubble{background:#fff;border-radius:0 18px 18px 18px;box-shadow:var(--shadow);overflow:hidden;}
+
+/* hero */
+.hero{background:linear-gradient(150deg,#160800 0%,#3a1600 35%,#7a3200 68%,#BF7215 100%);padding:28px 22px 22px;position:relative;overflow:hidden;}
+.hero::after{content:'✈';position:absolute;bottom:10px;right:20px;font-size:64px;opacity:0.10;transform:rotate(-20deg);}
+.hero-badge{display:inline-block;background:var(--kakao);color:var(--kakao-dk);font-size:12px;font-weight:900;padding:3px 12px;border-radius:20px;margin-bottom:10px;}
+.hero-title{font-size:21px;font-weight:900;color:#fff;line-height:1.4;letter-spacing:-0.5px;}
+.hero-meta{margin-top:7px;font-size:13px;color:rgba(255,255,255,0.65);font-weight:500;}
+.dl-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.28);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:9px;}
+.dl-pill.expired{background:rgba(220,60,60,0.5);border-color:rgba(220,60,60,0.7);}
+
+/* info */
+.info-sec{padding:16px 16px 4px;background:var(--cream);}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.icard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 13px;}
+.icard.full{grid-column:1/-1;}
+.ilabel{font-size:13px;font-weight:700;color:#111;letter-spacing:0px;margin-bottom:4px;}
+.ival{font-size:15px;font-weight:700;color:#1a1a1a;line-height:1.45;}
+.ival .r{color:var(--red);}
+.ival .g{color:var(--green);}
+.ival .sm{font-size:12px;color:#555;font-weight:700;}
+
+/* account */
+.acct-card{margin:0 16px 10px;background:#EBF2FF;border:1.5px solid #93BAF5;border-radius:12px;padding:13px 15px;}
+.acct-top{font-size:12px;font-weight:900;color:var(--blue);margin-bottom:9px;}
+.acct-row{display:flex;align-items:center;gap:10px;}
+.acct-info{flex:1;}
+.acct-bank{font-size:12px;color:#666;font-weight:500;}
+.acct-num{font-size:18px;font-weight:900;color:#111;letter-spacing:1px;}
+.acct-name{font-size:12px;color:#555;font-weight:500;margin-top:2px;}
+.btn-copy{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:all 0.2s;white-space:nowrap;flex-shrink:0;}
+.btn-copy:hover{background:#1e52b8;}
+.btn-copy.done{background:var(--green);}
+
+/* warning */
+.warn-box{margin:0 16px 10px;background:#FFF4CC;border:1.5px solid #F5C200;border-radius:12px;padding:13px 15px;font-size:14px;color:#5C3D00;font-weight:700;line-height:1.85;}
+.warn-box .wt{font-size:16px;font-weight:900;color:#C45000;margin-bottom:3px;}
+.warn-box a{color:var(--blue);text-decoration:none;font-weight:900;}
+
+/* notice */
+.notice-box{margin:0 16px 14px;background:#FFFBE8;border-left:4px solid var(--kakao);border-radius:0 9px 9px 0;padding:11px 13px;font-size:14px;color:#4A3300;font-weight:700;line-height:1.9;}
+.notice-box strong{font-weight:900;}
+
+/* counter */
+.counter-wrap{margin:0 16px 12px;background:linear-gradient(135deg,#1a1a1a,#2e2e2e);border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;}
+.c-left{color:#fff;}
+.c-lbl{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:3px;font-weight:500;}
+.c-num{font-size:42px;font-weight:900;color:var(--kakao);line-height:1;}
+.c-num span{font-size:17px;color:rgba(255,255,255,0.45);font-weight:500;}
+.s-pill{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-top:5px;}
+.s-ok{background:rgba(30,158,107,0.25);color:#1E9E6B;}
+.s-warn{background:rgba(217,64,64,0.25);color:var(--red);}
+.ring-bg{fill:none;stroke:rgba(255,255,255,0.10);stroke-width:5;}
+.ring-fill{fill:none;stroke:var(--kakao);stroke-width:5;stroke-linecap:round;transform:rotate(-90deg);transform-origin:32px 32px;transition:stroke-dashoffset 0.5s ease;}
+
+/* stats */
+.stats-bar{margin:0 16px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.scard{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;}
+.slbl{font-size:13px;color:#111;font-weight:700;margin-bottom:3px;}
+.sval{font-size:15px;font-weight:900;color:#1a1a1a;}
+.sval.g{color:var(--green);}
+.sval.b{color:var(--blue);}
+.sval.r{color:var(--red);}
+
+/* admin bar */
+.admin-bar{margin:0 16px 10px;background:#111;border-radius:9px;padding:8px 14px;display:none;align-items:center;justify-content:space-between;}
+.admin-bar.on{display:flex;}
+.adm-txt{font-size:12px;color:var(--kakao);font-weight:700;}
+.adm-exit{background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:500;font-family:'Noto Sans KR',sans-serif;cursor:pointer;}
+
+/* list */
+.list-sec{padding:0 16px 14px;background:var(--cream);}
+.list-hdr{font-size:16px;font-weight:900;color:#111;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.list-hdr::after{content:'';flex:1;height:2px;background:var(--border);}
+.list-count{font-size:13px;font-weight:700;color:#fff;background:var(--kakao-dk);border-radius:20px;padding:2px 10px;}
+.list-tip{font-size:12px;color:#888;font-weight:500;margin-bottom:10px;text-align:right;}
+.p-table{width:100%;border-collapse:collapse;font-size:13px;}
+.p-table th{background:#E8E3D8;padding:9px 6px;font-size:13px;font-weight:900;color:#111;border-bottom:2px solid var(--border);text-align:center;}
+.p-table th.left{text-align:left;}
+.p-table td{padding:10px 6px;border-bottom:1px solid #EDE8DF;vertical-align:middle;font-weight:700;}
+.p-table tr:nth-child(even) td{background:#FAFAF5;}
+.p-table tr:last-child td{border-bottom:none;}
+.p-badge{width:26px;height:26px;border-radius:50%;background:var(--kakao);color:var(--kakao-dk);font-size:12px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;}
+.dep-btn{border:none;border-radius:8px;padding:6px 10px;font-size:13px;font-weight:900;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;cursor:default;display:inline-flex;align-items:center;gap:4px;}
+.dep-ok{background:#DCFCE7;color:#166534;border:1.5px solid #86EFAC;}
+.dep-no{background:#FEE2E2;color:#991B1B;border:1.5px solid #FCA5A5;}
+.dep-btn.clickable{cursor:pointer;transition:all 0.15s;}
+.dep-btn.clickable:hover{transform:scale(1.05);opacity:0.85;}
+.adm-guide{margin:0 16px 10px;background:#F0F4FF;border:1px solid #C7D4F5;border-radius:8px;padding:8px 13px;font-size:12px;color:#3A5CB8;font-weight:700;text-align:center;}
+.del-btn{background:none;border:none;color:#ddd;font-size:17px;cursor:pointer;padding:2px 4px;line-height:1;}
+.del-btn:hover{color:var(--red);}
+.empty-state{text-align:center;padding:22px 0;color:#bbb;font-size:14px;font-weight:500;}
+.empty-state span{font-size:30px;display:block;margin-bottom:6px;}
+
+/* form */
+.form-sec{padding:14px 16px 18px;background:#F2F0EA;border-top:1px solid var(--border);}
+.form-ttl{font-size:15px;font-weight:900;color:#1a1a1a;margin-bottom:11px;}
+.form-row{display:flex;gap:7px;margin-bottom:8px;}
+.form-row input{flex:1;border:1.5px solid var(--border);border-radius:9px;padding:12px 13px;font-size:15px;font-weight:500;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color 0.2s;background:#fff;}
+.form-row input:focus{border-color:var(--kakao);}
+.form-row input::placeholder{color:#bbb;font-weight:400;}
+.btn-submit{width:100%;padding:14px;background:var(--kakao);color:var(--kakao-dk);font-family:'Noto Sans KR',sans-serif;font-size:16px;font-weight:900;border:none;border-radius:12px;cursor:pointer;transition:all 0.2s;}
+.btn-submit:hover:not(:disabled){background:#EFD600;transform:translateY(-1px);box-shadow:0 4px 14px rgba(254,229,0,0.4);}
+.btn-submit:disabled{background:#E8E3D8;color:#AAA;cursor:not-allowed;transform:none;}
+
+/* expired */
+.expired-banner{margin:0 16px 14px;background:#FFF0F0;border:2px dashed var(--red);border-radius:12px;padding:16px;text-align:center;color:var(--red);font-size:17px;font-weight:900;}
+.expired-banner .sub{font-size:13px;color:#888;font-weight:500;margin-top:4px;}
+
+/* fuel notice */
+.fuel-notice{margin:0 16px 14px;background:#EBF3FF;border:1.5px solid #7BB3F0;border-left:5px solid #2B63CC;border-radius:0 10px 10px 0;padding:13px 15px;font-size:14px;color:#1a3a6b;font-weight:700;line-height:2.0;letter-spacing:0.1px;}
+.fuel-title{font-size:15px;font-weight:900;color:#1044A8;margin-bottom:6px;}
+
+/* footer */
+.bubble-footer{padding:12px 16px;background:#FAFAF7;border-top:1px solid var(--border);font-size:12px;color:#bbb;text-align:center;line-height:1.7;font-weight:500;}
+.admin-hint{cursor:pointer;opacity:0.3;user-select:none;}
+
+/* toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(60px);background:#1a1a1a;color:#fff;padding:12px 24px;border-radius:30px;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);z-index:9999;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="chat-wrap">
+
+  <div class="chat-header">
+    <div class="chat-avatar">✈️</div>
+    <div>
+      <div class="chat-name">서부초등 50회 동기회</div>
+      <div class="chat-sub">2026 칠순 해외여행 예약 신청서</div>
+    </div>
+  </div>
+
+  <div class="bubble">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">📣 2026 칠순 해외여행 예약 신청</div>
+      <div class="hero-title">서부초등 50회<br>2026년 칠순 해외여행 ✈️</div>
+      <div class="hero-meta">🇨🇳 중국 상하이 · 9월 10일 ~ 13일 (3박 4일)</div>
+      <div class="dl-pill" id="dlPill">📅 신청기간: 4월 1일 ~ 4월 30일</div>
+    </div>
+
+    <!-- Info -->
+    <div class="info-sec">
+      <div class="info-grid">
+        <div class="icard">
+          <div class="ilabel">📅 여행 날짜</div>
+          <div class="ival">9월 10일 ~ 13일<br><span class="sm">3박 4일</span></div>
+        </div>
+        <div class="icard">
+          <div class="ilabel">📍 여행 장소</div>
+          <div class="ival">🇨🇳 중국<br>상하이(上海)</div>
+        </div>
+        <div class="icard">
+          <div class="ilabel">💰 1인 여행 경비</div>
+          <div class="ival"><span class="r">890,000원</span><br><span class="sm">총 여행경비</span></div>
+        </div>
+        <div class="icard">
+          <div class="ilabel">💳 신청 금액</div>
+          <div class="ival"><span class="g">590,000원</span><br><span class="sm">신청 시 입금</span></div>
+        </div>
+        <div class="icard full" style="background:#FFF9E6;border-color:#F5C200;">
+          <div class="ilabel">🎁 50회 동기회 지원</div>
+          <div class="ival">
+            여행경비 890,000원 중 동기회에서 <span class="g">1인 300,000원 지원</span><br>
+            <span class="sm">→ 실제 개인 부담금: </span><span class="r" style="font-size:17px;">590,000원</span>
+          </div>
+        </div>
+        <div class="icard full">
+          <div class="ilabel">🛏 숙박 안내</div>
+          <div class="ival">2인 1실 기본 · 홀수(1인) 단독 숙박 시 <span class="r">$70 추가</span></div>
+        </div>
+        <div class="icard full">
+          <div class="ilabel">👥 참가 인원 조건</div>
+          <div class="ival">최소 <span class="g">25명 ~ 40명</span> · <span class="r">25명 이하 시 취소</span></div>
+        </div>
+        <div class="icard full">
+          <div class="ilabel">🚌 날짜 / 집합장소 / 시간</div>
+          <div class="ival">9월 10일 / 대구공항 / 10시</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account -->
+    <div class="acct-card">
+      <div class="acct-top">💳 여행경비 및 예약금 입금 계좌</div>
+      <div class="acct-row">
+        <div class="acct-info">
+          <div class="acct-bank">대구은행</div>
+          <div class="acct-num">504-10-493040-3</div>
+          <div class="acct-name">예금주: 서부초등50회 동기회</div>
+        </div>
+        <button class="btn-copy" id="copyBtn" onclick="copyAccount()">📋 복사</button>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="warn-box">
+      <div class="wt">⚠️ 입금 후 반드시 연락하세요!</div>
+      여행경비(590,000원) 입금 후<br>
+      <strong>총무에게 필히 문자로 연락 주세요!</strong><br>
+      📱 총무 연락처: <a href="tel:01035070142">010-3507-0142</a>
+    </div>
+
+    <!-- Notice -->
+    <div class="notice-box">
+      <strong>📌 꼭 확인하세요!</strong><br>
+      · 신청 기간: <strong>2026년 4월 1일 ~ 4월 30일</strong><br>
+      · 여권 유효기간 <strong>6개월 이상</strong> 남아있어야 합니다<br>
+      · 개인 준비물 별도 지참<br>
+      · 문의: <strong>50회 총무 (010-3507-0142)</strong>
+    </div>
+
+    <!-- Fuel surcharge notice -->
+    <div class="fuel-notice">
+      <div class="fuel-title">✈️ 여행 경비 변동 안내</div>
+      현재 3월 유류 할증료 <strong>77,500원</strong> 적용 중이며, 국제 원유 가격 상승 및 원/달러 환율 상승(원화 가치 하락)으로 <strong>계약 시점에 따라 여행 경비가 변경될 수 있습니다.</strong>
+    </div>
+
+    <!-- Counter -->
+    <div class="counter-wrap">
+      <div class="c-left">
+        <div class="c-lbl">현재 참가 신청 인원</div>
+        <div class="c-num" id="countNum">0 <span>명</span></div>
+        <div class="s-pill s-warn" id="sPill">모집 중</div>
+      </div>
+      <div style="text-align:center;">
+        <svg width="64" height="64" viewBox="0 0 64 64">
+          <circle class="ring-bg" cx="32" cy="32" r="27"/>
+          <circle class="ring-fill" id="ringFill" cx="32" cy="32" r="27"
+            stroke-dasharray="169.6" stroke-dashoffset="169.6"/>
+        </svg>
+        <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;">목표 <strong style="color:var(--kakao)">40</strong>명</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="scard"><div class="slbl">총 신청</div><div class="sval b" id="stTotal">0명</div></div>
+      <div class="scard"><div class="slbl">입금 완료</div><div class="sval g" id="stConf">0명</div></div>
+      <div class="scard"><div class="slbl">납입 합계</div><div class="sval r" id="stAmt">0원</div></div>
+    </div>
+
+    <!-- Admin bar -->
+    <div class="admin-bar" id="adminBar">
+      <div class="adm-txt">🔐 총무 관리 모드</div>
+      <button class="adm-exit" onclick="exitAdmin()">나가기</button>
+    </div>
+
+    <!-- Expired -->
+    <div class="expired-banner" id="expBanner" style="display:none;">
+      🚫 신청 접수 완료
+      <div class="sub">신청기간(4월 30일)이 종료되었습니다</div>
+    </div>
+
+    <!-- List -->
+    <div class="list-sec">
+      <div class="list-hdr">📋 참가 신청자 명단 <span class="list-count" id="listCount">0명</span></div>
+      <div class="list-tip" id="listTip"></div>
+      <div id="listWrap">
+        <div class="empty-state"><span>🙋</span>아직 신청자가 없습니다.<br>첫 번째로 신청해 보세요!</div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-sec">
+      <div class="form-ttl" id="formTtl">✏️ 참가 예약 신청</div>
+      <div class="form-row">
+        <input type="text" id="iName"  placeholder="이름" maxlength="10">
+        <input type="tel"  id="iPhone" placeholder="010-0000-0000" maxlength="15">
+      </div>
+      <button class="btn-submit" id="subBtn" onclick="addP()">참가 예약 신청 완료 ✓</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="bubble-footer">
+      서부초등 50회 동기회 공식 안내 · 총무 010-3507-0142<br>
+      <span class="admin-hint" id="aHint" onclick="aTap()">⚙</span>
+    </div>
+
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── 설정값 ── */
+const GOAL    = 40;
+const WARN    = 25;
+const DEP_AMT = 590000;
+const PIN     = '5050';
+const T_START = new Date('2026-04-01T00:00:00');
+const T_END   = new Date('2026-04-30T23:59:59');
+
+let parts = {};
+let isAdm = false;
+
+/* ── 초기화 ── */
+(function(){
+  try { parts = JSON.parse(localStorage.getItem('t2026') || '{}'); } catch(e) {}
+  draw();
+})();
+
+function saveL() {
+  try { localStorage.setItem('t2026', JSON.stringify(parts)); } catch(e) {}
+}
+
+/* ── 기간 체크 ── */
+function chkDL(){
+  const now=new Date();
+  const pill=document.getElementById('dlPill');
+  const btn=document.getElementById('subBtn');
+  const ttl=document.getElementById('formTtl');
+  const ban=document.getElementById('expBanner');
+  if(now>T_END){
+    pill.textContent='🚫 신청 접수 완료 (마감)'; pill.className='dl-pill expired';
+    btn.disabled=true; btn.textContent='🚫 신청기간 종료 — 접수 완료';
+    ttl.textContent='⛔ 신청기간이 종료되었습니다 (4월 30일 마감)';
+    ban.style.display='block'; return true;
+  }
+  if(now<T_START){
+    btn.disabled=true; btn.textContent='📅 신청기간 시작 전 (4월 1일~)'; return false;
+  }
+  const rem=Math.ceil((T_END-now)/(1000*60*60*24));
+  pill.textContent='📅 신청 중 · '+rem+'일 남음';
+  return false;
+}
+
+/* ── 전화번호 포맷 ── */
+document.getElementById('iPhone').addEventListener('input',function(){
+  const v=this.value.replace(/\D/g,'');
+  if(v.length<=3) this.value=v;
+  else if(v.length<=7) this.value=v.slice(0,3)+'-'+v.slice(3);
+  else this.value=v.slice(0,3)+'-'+v.slice(3,7)+'-'+v.slice(7,11);
+});
+
+/* ── 신청 추가 ── */
+function addP(){
+  if(chkDL()){toast('⛔ 신청기간이 종료되었습니다'); return;}
+  const n=document.getElementById('iName').value.trim();
+  const p=document.getElementById('iPhone').value.trim();
+  if(!n){toast('⚠️ 이름을 입력해 주세요'); return;}
+  if(!p||p.replace(/\D/g,'').length<10){toast('⚠️ 연락처를 정확히 입력해 주세요'); return;}
+  if(Object.values(parts).some(x=>x.n===n)){toast('⚠️ 이미 신청된 이름입니다'); return;}
+  const id = 'l' + Date.now();
+  parts[id] = { n, p, ts: Date.now(), ok: false };
+  saveL();
+  draw();
+  document.getElementById('iName').value='';
+  document.getElementById('iPhone').value='';
+  toast('✅ '+n+'님 예약 신청 완료!');
+}
+
+function togDep(id){
+  if(!isAdm) return;
+  if(!parts[id]) return;
+  parts[id].ok=!parts[id].ok; saveL(); draw();
+  toast((!parts[id].ok?'↩️ ':'✅ ')+(parts[id]?.n||'')+' 입금 '+(!parts[id].ok?'취소':'확인'));
+}
+
+function delP(id){
+  if(!isAdm) return;
+  const nm=parts[id]?.n||'(알수없음)';
+  if(!confirm(nm+'님 신청을 취소하시겠습니까?')) return;
+  delete parts[id]; saveL(); draw();
+  toast('🗑 '+nm+'님 취소됨');
+}
+
+/* ── 전체 렌더 ── */
+function draw(){
+  chkDL();
+  const list=Object.entries(parts).sort((a,b)=>a[1].ts-b[1].ts);
+  const tot=list.length;
+  const conf=list.filter(([,x])=>x.ok).length;
+  const amt=conf*DEP_AMT;
+
+  document.getElementById('countNum').innerHTML=tot+' <span>명</span>';
+  document.getElementById('stTotal').textContent=tot+'명';
+  document.getElementById('stConf').textContent=conf+'명';
+  document.getElementById('stAmt').textContent=amt.toLocaleString()+'원';
+
+  const pct=Math.min(tot/GOAL,1);
+  document.getElementById('ringFill').style.strokeDashoffset=(169.6*(1-pct)).toFixed(2);
+
+  const pill=document.getElementById('sPill');
+  if(tot>=GOAL){pill.className='s-pill s-ok';pill.textContent='✅ 목표 달성!';}
+  else if(tot>=WARN){pill.className='s-pill s-ok';pill.textContent='🟡 '+(GOAL-tot)+'명 더 모집 중';}
+  else{pill.className='s-pill s-warn';pill.textContent='🔴 '+(WARN-tot)+'명 더 필요';}
+
+  document.getElementById('listCount').textContent = tot + '명';
+  const tip = document.getElementById('listTip');
+  tip.textContent = conf > 0 ? `입금 완료 ${conf}명 / 미입금 ${tot - conf}명` : '';
+
+  document.getElementById('adminBar').classList.toggle('on', isAdm);
+
+  const wrap=document.getElementById('listWrap');
+  if(tot===0){
+    wrap.innerHTML='<div class="empty-state"><span>🙋</span>아직 신청자가 없습니다.<br>첫 번째로 신청해 보세요!</div>';
+    return;
+  }
+  const rows=list.map(([id,x],i)=>{
+    const cls=x.ok?'dep-ok':'dep-no';
+    const txt=x.ok?'✅ 입금완료':'미입금';
+    const cl=isAdm?' clickable':'';
+    const oc=isAdm?`onclick="togDep('${id}')" title="클릭: 입금상태 변경"`:'';
+    const del=isAdm?`<td><button class="del-btn" onclick="delP('${id}')">×</button></td>`:'<td></td>';
+    return `<tr>
+      <td style="text-align:center"><span class="p-badge">${i+1}</span></td>
+      <td class="left" style="font-weight:900">${e(x.n)}</td>
+      <td style="font-size:13px;color:#555">${e(x.p)}</td>
+      <td style="text-align:center"><button class="dep-btn ${cls}${cl}" ${oc}>${txt}</button></td>
+      ${del}
+    </tr>`;
+  }).join('');
+  wrap.innerHTML=`<table class="p-table">
+    <thead><tr>
+      <th style="width:30px">#</th>
+      <th class="left">이름</th>
+      <th class="left">연락처</th>
+      <th>여행경비 입금확인</th>
+      <th style="width:22px"></th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+/* ── 계좌 복사 ── */
+function copyAccount(){
+  const txt='대구은행 504-10-493040-3 (예금주: 서부초등50회 동기회)';
+  const btn=document.getElementById('copyBtn');
+  const done=()=>{ btn.textContent='✓ 복사됨'; btn.classList.add('done'); toast('📋 계좌번호 복사 완료!'); setTimeout(()=>{ btn.textContent='📋 복사'; btn.classList.remove('done'); },2500); };
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(done).catch(()=>fbCopy(txt,done)); }
+  else{ fbCopy(txt,done); }
+}
+function fbCopy(txt,cb){
+  const t=document.createElement('textarea');
+  t.value=txt; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); cb();
+}
+
+/* ── 관리자 모드 ── */
+let tc=0,tt=null;
+function aTap(){
+  tc++; clearTimeout(tt); tt=setTimeout(()=>tc=0,2000);
+  if(tc>=3){
+    tc=0;
+    const pin=prompt('총무 관리 비밀번호를 입력하세요:');
+    if(pin===PIN){ isAdm=true; draw(); toast('🔐 총무 관리 모드 활성화'); }
+    else if(pin!==null){ toast('❌ 비밀번호가 틀렸습니다'); }
+  }
+}
+function exitAdmin(){ isAdm=false; draw(); toast('관리 모드 종료'); }
+
+/* ── 유틸 ── */
+function e(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+
+document.getElementById('iName').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('iPhone').focus(); });
+document.getElementById('iPhone').addEventListener('keydown',e=>{ if(e.key==='Enter') addP(); });
+</script>
+</body>
+</html>
